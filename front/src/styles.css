@@ -1,0 +1,12 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+    height: 100vh;
+}
+
+.not-found-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex-grow: 1;
+}

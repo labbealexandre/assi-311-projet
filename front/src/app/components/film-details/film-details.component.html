@@ -1,0 +1,28 @@
+<div *ngIf="exists; else elseBlock" class="container-fluid w-50 bg-light p-5">
+    <h1 class="text-center display-2 mb-5">{{film.titre}}</h1>
+    <div class="row row-cols-2">
+        <div class="col">
+            <h2 class="text-center display-6">{{realisateur.prenom}} {{realisateur.nom}}</h2>
+            <p class="text-center lead mb-5">{{realisateur.dateNaissance}}</p>
+            <ul *ngIf="realisateur.filmRealises.length > 0" class="list-group">
+                <li class="list-group-item active text-center">
+                    Autres œuvres
+                </li>
+                <li class="list-group-item" *ngFor="let film of realisateur.filmRealises">
+                    <a [routerLink]="['/my-films/', film.id]" class="nounderline">{{film.titre}}</a>
+                </li>
+            </ul>
+            <p *ngIf="realisateur.filmRealises.length === 0" class="lead text-center">
+                Aucun autre film de ce réalisateur n'est répertorié
+            </p>
+        </div>
+        <div class=" col">
+            <h2 class="text-center display-6">Durée: {{dureeFormattee}}</h2>
+        </div>
+    </div>
+</div>
+<ng-template #elseBlock>
+    <h1 class="display-2 not-found-container">
+        Film non trouvé
+    </h1>
+</ng-template>

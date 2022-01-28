@@ -1,0 +1,78 @@
+<div class="container-fluid">
+    <div class="row row-cols-4 g-2 h-100">
+        <div class="col" *ngFor="let film of films">
+            <div class="card p-2 bg-light">
+                <h5 class="card-title">{{film.titre}}</h5>
+                <p class="cart-text">{{film.realisateur.prenom}} {{film.realisateur.nom}}</p>
+                <a [routerLink]="['/my-films/', film.id]" class="card-link">Détails</a>
+                <div class="card-body">
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createUpdateModal"
+                        (click)="edit(film.id)">
+                        <i class="fa fa-edit"></i>
+                    </button>
+                    <button class="btn btn-secondary  mx-3" data-bs-toggle="modal" data-bs-target="#deleteModal"
+                        (click)="remove(film.id)">
+                        <i class="fa fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-primary m-3 btn-lg" data-bs-toggle="modal" data-bs-target="#createUpdateModal"
+        (click)="setEditMode(false)">
+        <i class=" fa fa-plus"></i>
+    </button>
+</div>
+
+<div id="createUpdateModal" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{editMode ? "Modification" : "Création"}} d'un film</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form [formGroup]="filmForm" (ngSubmit)="onCreateUpdateSubmit()">
+                <div class="modal-body">
+                    <div>
+                        <label for="titreLabelInput" class="form-label">Titre</label>
+                        <input id="titreLabelInput" type="text" class="form-control" formControlName="titre">
+                    </div>
+                    <div class="mt-3">
+                        <label for="titreLabelInput" class="form-label">Duree (en minutes)</label>
+                        <input id="titreLabelInput" type="number" class="form-control" formControlName="duree">
+                    </div>
+                    <div class="mt-3">
+                        <label for="titreLabelInput" class="form-label">Id du réalisateur</label>
+                        <input id="titreLabelInput" type="number" class="form-control" formControlName="realisateurId">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal"
+                        [disabled]="filmForm.invalid">Confirmer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="deleteModal" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Suppression d'un film</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <label>Êtes-vous sur de vouloir suppirmer {{currentFilm?.titre || ""}} ?</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal"
+                    (click)="onDeleteSubmit()">Confirmer</button>
+            </div>
+        </div>
+    </div>
+</div>
